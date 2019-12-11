@@ -85,7 +85,6 @@ browser.get(link)
 time.sleep(3)
 
 
-
 handle = browser.current_window_handle
 browser.find_element_by_xpath(link_path).click()
 handles = browser.window_handles
