@@ -5,10 +5,15 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 import zipfile
 import time 
+from get_random_link import get_link
 
+file_name = 'links.txt'
 link_path = '//*[@id="resource-list"]/li/label/a'
 button_path = '//*[@id="main-content"]/div/div/div[4]/div[1]/div[2]/button'
 
+
+link = get_link(file_name)
+print(link)
 ip = 'proxy.wandouip.com'
 port = 8090
 username = 'borenwu@163.com'
@@ -69,14 +74,14 @@ with zipfile.ZipFile(plugin_file, 'w') as zp:
     zp.writestr("manifest.json", manifest_json)
     zp.writestr("background.js", background_js)
 
-prefs = {'profile.default_content_settings.popups': 0, 'download.default_directory': 'g:\\'}
+prefs = {'profile.default_content_settings.popups': 0, 'download.default_directory': 'g:\\download'}
 chrome_options = Options()
 # chrome_options.add_argument("--start-maximized")
 chrome_options.add_experimental_option('prefs', prefs)
 chrome_options.add_extension(plugin_file)
 
 browser = webdriver.Chrome(chrome_options=chrome_options)
-browser.get('https://it.15kankan.com/info/toB792590')
+browser.get(link)
 time.sleep(3)
 
 
@@ -88,5 +93,6 @@ handles = browser.window_handles
 browser.switch_to_window(handles[-1])
 elem = WebDriverWait(browser,30).until(lambda dirver:browser.find_element_by_xpath(button_path))
 elem.click()
-# cookie = browser.get_cookies()
-# print(cookie)
+
+time.sleep(15)
+browser.quit()

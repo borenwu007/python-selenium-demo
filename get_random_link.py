@@ -9,6 +9,5 @@ def get_link(file):
     f.close()
     return link
 
-link = get_link('links.txt')
-print(link)
+
 
